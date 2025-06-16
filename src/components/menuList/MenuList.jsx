@@ -36,6 +36,10 @@ function MenuList({ showBasket, setShowBasket }) {
           body: JSON.stringify(orderedProduct),
         }
       );
+      const data = await response.json();
+      if (!sessionId && data.session_id) {
+        sessionStorage.setItem("session_id", data.session_id);
+      }
       // const responseText = await response.text();
       // console.log("POST response:", response.status, responseText);
 

@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../components/header/header";
 import axios from "axios";
 import "./AboutUs.css";
+import ResponsiveHeader from "../../components/responsiveHeader/responsiveHeader";
+import Footer from "../../components/footer/footer";
 function AboutUs() {
   const [video, setVideo] = useState([]);
+  const [mobHeader, setMobHeader] = useState(false);
   useEffect(() => {
     const response = axios
       .get("https://misho.pythonanywhere.com/api/store/videos/")
@@ -17,7 +20,8 @@ function AboutUs() {
 
   return (
     <>
-      <Header />
+      <Header mobHeader={mobHeader} setMobHeader={setMobHeader} />
+      <ResponsiveHeader mobHeader={mobHeader} setMobHeader={setMobHeader} />
       <div className="aboutUsContainer">
         {" "}
         {video.map((videoSource, index) => (
@@ -27,6 +31,7 @@ function AboutUs() {
           </video>
         ))}
       </div>
+      <Footer />
     </>
   );
 }

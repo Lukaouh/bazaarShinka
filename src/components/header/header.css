@@ -60,6 +60,7 @@
 .basketIcon {
   display: flex;
   position: relative;
+  gap: 20px;
 }
 .arrayLength {
   display: flex;
@@ -83,6 +84,11 @@
 @media only screen and (max-width: 768px) {
   .routesContainer,
   .contactContainer p {
+    display: none;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .burgerMenuButton {
     display: none;
   }
 }

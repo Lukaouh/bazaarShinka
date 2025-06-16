@@ -5,11 +5,14 @@ import "./menu.css";
 import MenuList from "../../components/MenuList/MenuList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
-function Menu() {
+import ResponsiveHeader from "../../components/responsiveHeader/responsiveHeader";
+import Footer from "../../components/footer/footer";
+function Menu({}) {
   const [categories, setCategories] = useState([]);
   const [activeList, setActiveList] = useState(null);
   const [showBasket, setShowBasket] = useState(false);
   const [showCategory, setShowCategory] = useState(true);
+  const [mobHeader, setMobHeader] = useState(false);
   useEffect(() => {
     const response = axios
       .get("https://misho.pythonanywhere.com/api/store/category")
@@ -29,7 +32,12 @@ function Menu() {
   };
   return (
     <>
-      <Header setShowBasket={setShowBasket} />
+      <Header
+        setShowBasket={setShowBasket}
+        setMobHeader={setMobHeader}
+        mobHeader={mobHeader}
+      />
+      <ResponsiveHeader mobHeader={mobHeader} setMobHeader={setMobHeader} />
       <div className="menuContainer">
         <div className="content">
           <div className="categoriContent">
@@ -80,6 +88,7 @@ function Menu() {
           <MenuList showBasket={showBasket} setShowBasket={setShowBasket} />
         </div>
       </div>
+      <Footer />
     </>
   );
 }

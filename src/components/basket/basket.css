@@ -29,12 +29,9 @@
   border-radius: 8px;
   padding: 20px;
 
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
-
   transform: translateX(100%);
   transition: transform 0.4s ease;
+  max-height: 400px;
 }
 
 .basketShow {
@@ -44,6 +41,10 @@
 
 .basketShow .basketContent {
   transform: translateX(0);
+}
+.productList {
+  overflow: hidden;
+  overflow-y: auto;
 }
 .basketItems {
   display: flex;
@@ -171,4 +172,23 @@
   font-family: "FiraGo-400";
   color: rgba(51, 51, 51, 1);
   font-size: 18px;
+}
+
+.productList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.productList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.productList::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.productList::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 1);
+  cursor: pointer;
 }

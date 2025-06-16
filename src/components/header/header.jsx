@@ -1,15 +1,18 @@
-import React, { useState } from "react";
 import "./header.css";
 import companyLogo from "../../assets/images/companyLogo.png";
 import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faBars } from "@fortawesome/free-solid-svg-icons";
 
-function header({ setShowBasket }) {
+function header({ setShowBasket, setMobHeader, mobHeader }) {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
   const showBasketContent = () => {
     setShowBasket(true);
+  };
+  const showMobileHeader = () => {
+    setMobHeader(true);
+    console.log(mobHeader);
   };
   return (
     <div className="MainContainer">
@@ -36,6 +39,12 @@ function header({ setShowBasket }) {
             <button onClick={showBasketContent}>
               <FontAwesomeIcon
                 icon={faCartShopping}
+                style={{ width: "20px", height: "20px" }}
+              />
+            </button>
+            <button className="burgerMenuButton" onClick={showMobileHeader}>
+              <FontAwesomeIcon
+                icon={faBars}
                 style={{ width: "20px", height: "20px" }}
               />
             </button>

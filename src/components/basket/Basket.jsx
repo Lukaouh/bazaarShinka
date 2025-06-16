@@ -10,13 +10,12 @@ function Basket({ product, setShowBasket, getMenuList, showBasket }) {
       getMenuList();
     }
   }, [showBasket]);
-
+  console.log(product);
   const removeProductFromBasket = async (element) => {
     const sessionId = sessionStorage.getItem("session_id");
     const removedProduct = {
       product: element.product,
     };
-
     try {
       const response = await fetch(
         "https://misho.pythonanywhere.com/api/order/remove-product/",
@@ -36,6 +35,10 @@ function Basket({ product, setShowBasket, getMenuList, showBasket }) {
 
     getMenuList();
   };
+  const totalPrice = product?.items?.reduce(
+    (acc, item) => acc + item.product_price,
+    0
+  );
 
   return (
     <div className={`basketContainer ${showBasket ? "basketShow" : ""}`}>
@@ -50,7 +53,7 @@ function Basket({ product, setShowBasket, getMenuList, showBasket }) {
             <FontAwesomeIcon icon={faX} />
           </button>
         </div>
-        <div>
+        <div className="productList">
           {product?.items?.map((data) => (
             <div className="mapedContainer" key={data.product}>
               <div className="basketMenuImg">
@@ -81,7 +84,7 @@ function Basket({ product, setShowBasket, getMenuList, showBasket }) {
         </div>
         {product?.items?.length > 0 ? (
           <div className="lastPriceAndOrder">
-            <span>სულ : 2.5₾</span>
+            <span>სულ : {totalPrice}₾</span>
             <button>კალათის ნახვა</button>
           </div>
         ) : (

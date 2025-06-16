@@ -1,0 +1,77 @@
+.mobHeaderContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  padding-top: 110px;
+
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  z-index: 1000;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobHeaderItems {
+  display: flex;
+  width: 350px;
+  max-width: 400px;
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  height: auto;
+  z-index: 1000;
+  border-radius: 8px;
+  padding: 24px;
+
+  transform: translateX(100%);
+  transition: transform 0.4s ease;
+  max-height: 400px;
+}
+.closeMobHeader button {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+.mobHeaderLinks {
+  display: flex;
+  flex-direction: column;
+  max-width: auto;
+  gap: 30px;
+}
+
+.nonActive {
+  font-weight: 600;
+  background: transparent;
+  text-decoration: none;
+  color: rgba(140, 167, 10, 1);
+  font-size: 18px;
+  font-family: "FiraGO-600";
+  cursor: pointer;
+}
+.isActive {
+  background: transparent;
+  text-decoration: none;
+  color: rgba(140, 167, 10, 1);
+  font-size: 18px;
+  font-weight: 400;
+  font-family: "FiraGO-400";
+  cursor: pointer;
+  gap: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .showMobHeader {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .showMobHeader .mobHeaderItems {
+    transform: translateX(0);
+  }
+}
