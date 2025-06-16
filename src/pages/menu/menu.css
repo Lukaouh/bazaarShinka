@@ -84,6 +84,7 @@ ul {
 .contentHide {
   display: none;
 }
+
 @media only screen and (max-width: 768px) {
   .menuContainer {
     display: flex;

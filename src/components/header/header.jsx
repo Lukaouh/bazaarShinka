@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faBars } from "@fortawesome/free-solid-svg-icons";
 
-function header({ setShowBasket, setMobHeader, mobHeader }) {
+function header({ setShowBasket, setMobHeader, basketLength }) {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
   const showBasketContent = () => {
@@ -12,7 +12,6 @@ function header({ setShowBasket, setMobHeader, mobHeader }) {
   };
   const showMobileHeader = () => {
     setMobHeader(true);
-    console.log(mobHeader);
   };
   return (
     <div className="MainContainer">
@@ -49,7 +48,7 @@ function header({ setShowBasket, setMobHeader, mobHeader }) {
               />
             </button>
             <div className="arrayLength">
-              <span>1</span>
+              <span>{basketLength ?? 0}</span>
             </div>
           </div>
         </div>

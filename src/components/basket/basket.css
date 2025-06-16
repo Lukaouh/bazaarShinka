@@ -94,6 +94,7 @@
   width: 100%;
   justify-content: space-between;
   padding-top: 10px;
+  align-items: center;
 }
 
 .basketMemuBtn {
@@ -200,4 +201,8 @@
 .productList::-webkit-scrollbar-thumb:hover {
   background: rgba(128, 128, 128, 1);
   cursor: pointer;
+}
+.lastPriceAndOrder button:active {
+  background: white;
+  color: rgba(51, 51, 51, 1);
 }

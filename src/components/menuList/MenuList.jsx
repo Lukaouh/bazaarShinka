@@ -4,78 +4,31 @@ import "./menuList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import Basket from "../basket/Basket";
-function MenuList({ showBasket, setShowBasket }) {
+function MenuList({
+  showBasket,
+  setShowBasket,
+  addToBasket,
+  getMenuList,
+  product,
+}) {
   const [menu, setMenu] = useState([]);
-  const [product, setProduct] = useState([]);
+
   useEffect(() => {
     axios
       .get("https://misho.pythonanywhere.com/api/store/products")
       .then((response) => {
         setMenu(response.data);
       })
-      .catch((error) => {
-        console.error("Error fetching menu:", error);
-      });
+      .catch((error) => {});
   }, []);
-  const addToBasket = async (element) => {
-    const sessionId = sessionStorage.getItem("session_id");
-    const orderedProduct = {
-      product: element.id,
-      quantity: 10,
-    };
-    try {
-      const response = await fetch(
-        "https://misho.pythonanywhere.com/api/order/cart/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            ...(sessionId ? { "Session-ID": sessionId } : {}),
-          },
-          credentials: "include",
-          body: JSON.stringify(orderedProduct),
-        }
-      );
-      const data = await response.json();
-      if (!sessionId && data.session_id) {
-        sessionStorage.setItem("session_id", data.session_id);
-      }
-      // const responseText = await response.text();
-      // console.log("POST response:", response.status, responseText);
-
-      // if (!response.ok) return;
-    } catch (error) {
-      console.log("არ გაიგზავნა", error);
-    }
-  };
-  const getMenuList = async () => {
-    const sessionId = sessionStorage.getItem("session_id");
-    try {
-      const response = await fetch(
-        "https://misho.pythonanywhere.com/api/order/cart/",
-        {
-          method: "GET",
-          headers: {
-            ...(sessionId ? { "Session-ID": sessionId } : {}),
-          },
-          credentials: "include",
-        }
-      );
-      const data = await response.json();
-      setProduct(data);
-      if (!response.ok) return;
-    } catch (error) {
-      console.log("Error get fetched menu list:", error);
-    }
-  };
 
   return (
     <div>
       <Basket
-        product={product}
         setShowBasket={setShowBasket}
-        getMenuList={getMenuList}
         showBasket={showBasket}
+        getMenuList={getMenuList}
+        product={product}
       />
 
       <div className="menuListContainer">

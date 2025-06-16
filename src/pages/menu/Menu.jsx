@@ -7,12 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import ResponsiveHeader from "../../components/responsiveHeader/responsiveHeader";
 import Footer from "../../components/footer/footer";
-function Menu({}) {
+function Menu({ setBasketLength, basketLength }) {
   const [categories, setCategories] = useState([]);
   const [activeList, setActiveList] = useState(null);
   const [showBasket, setShowBasket] = useState(false);
   const [showCategory, setShowCategory] = useState(true);
   const [mobHeader, setMobHeader] = useState(false);
+  const [product, setProduct] = useState([]);
   useEffect(() => {
     const response = axios
       .get("https://misho.pythonanywhere.com/api/store/category")
@@ -30,12 +31,72 @@ function Menu({}) {
       setActiveList(ID);
     }
   };
+  const getMenuList = async () => {
+    const sessionId = sessionStorage.getItem("session_id");
+    try {
+      const response = await fetch(
+        "https://misho.pythonanywhere.com/api/order/cart/",
+        {
+          method: "GET",
+          headers: {
+            ...(sessionId ? { "Session-ID": sessionId } : {}),
+          },
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        console.error("Failed to fetch menu list");
+        return;
+      }
+
+      const data = await response.json();
+      sessionStorage.setItem("cart_data", JSON.stringify(data));
+      setProduct(data);
+      setBasketLength(data?.items?.length);
+      console.log(data?.items?.length);
+    } catch (error) {}
+  };
+  const addToBasket = async (element) => {
+    const sessionId = sessionStorage.getItem("session_id");
+    const orderedProduct = {
+      product: element.id,
+    };
+
+    try {
+      const response = await fetch(
+        "https://misho.pythonanywhere.com/api/order/cart/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(sessionId ? { "Session-ID": sessionId } : {}),
+          },
+          credentials: "include",
+          body: JSON.stringify(orderedProduct),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!sessionId && data.session_id) {
+        sessionStorage.setItem("session_id", data.session_id);
+      }
+
+      sessionStorage.setItem("cart_data", JSON.stringify(data));
+    } catch (error) {}
+    getMenuList();
+  };
+  useEffect(() => {
+    console.log("App.jsx -> basketLength changed in menu:", basketLength);
+  }, [basketLength]);
   return (
     <>
       <Header
         setShowBasket={setShowBasket}
         setMobHeader={setMobHeader}
         mobHeader={mobHeader}
+        basketLength={basketLength}
       />
       <ResponsiveHeader mobHeader={mobHeader} setMobHeader={setMobHeader} />
       <div className="menuContainer">
@@ -85,7 +146,13 @@ function Menu({}) {
         </div>
         <div className="menuComponent">
           {" "}
-          <MenuList showBasket={showBasket} setShowBasket={setShowBasket} />
+          <MenuList
+            showBasket={showBasket}
+            setShowBasket={setShowBasket}
+            addToBasket={addToBasket}
+            getMenuList={getMenuList}
+            product={product}
+          />
         </div>
       </div>
       <Footer />

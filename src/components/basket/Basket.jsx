@@ -4,14 +4,13 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 import bin from "../../assets/images/bin.png";
 import { useEffect, useState } from "react";
 
-function Basket({ product, setShowBasket, getMenuList, showBasket }) {
+function Basket({ setShowBasket, showBasket, product, getMenuList }) {
   const [productQuantity, setProductQuantity] = useState({});
   const handleChange = (data, newValue) => {
     setProductQuantity((prevValue) => ({
       ...prevValue,
-      [data.product]: Math.max(newValue, Number(data.quantity)),
+      [data.product]: Math.max(newValue, Number(data.second_quantity)),
     }));
-    console.log(typeof productQuantity[3]);
   };
   useEffect(() => {
     if (showBasket) {
@@ -20,7 +19,6 @@ function Basket({ product, setShowBasket, getMenuList, showBasket }) {
   }, [showBasket]);
 
   const removeProductFromBasket = async (element) => {
-    console.log(element);
     const sessionId = sessionStorage.getItem("session_id");
     const removedProduct = {
       product: element.product,
@@ -53,6 +51,42 @@ function Basket({ product, setShowBasket, getMenuList, showBasket }) {
       }
     }, 0)
     .toFixed(1);
+
+  const goToCart = async () => {
+    const sessionId = sessionStorage.getItem("session_id");
+    const updateOrderData = product?.items.map((item) => {
+      return {
+        product: item.product,
+        quantity: productQuantity[item.product] ?? item.quantity,
+      };
+    });
+    try {
+      const response = await fetch(
+        "https://misho.pythonanywhere.com/api/order/cart/",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            ...(sessionId ? { "Session-ID": sessionId } : {}),
+          },
+          credentials: "include",
+          body: JSON.stringify(updateOrderData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!sessionId && data.session_id) {
+        sessionStorage.setItem("session_id", data.session_id);
+      }
+
+      sessionStorage.setItem("cart_data", JSON.stringify(data));
+    } catch (error) {
+      console.error("Cart update failed:", error);
+    }
+
+    getMenuList();
+  };
 
   return (
     <div className={`basketContainer ${showBasket ? "basketShow" : ""}`}>
@@ -100,9 +134,9 @@ function Basket({ product, setShowBasket, getMenuList, showBasket }) {
 
                     <input
                       type="number"
-                      value={(
+                      value={
                         productQuantity[data.product] ?? Number(data.quantity)
-                      ).toFixed(1)}
+                      }
                       onChange={(e) =>
                         handleChange(data, Number(e.target.value))
                       }
@@ -126,7 +160,13 @@ function Basket({ product, setShowBasket, getMenuList, showBasket }) {
         {product?.items?.length > 0 ? (
           <div className="lastPriceAndOrder">
             <span>სულ : {totalPrice}₾</span>
-            <button>კალათის ნახვა</button>
+            <button
+              onClick={() => {
+                goToCart();
+              }}
+            >
+              კალათის ნახვა
+            </button>
           </div>
         ) : (
           <p className="emptyBasket">თქვენი კალათა ცარიელია</p>
