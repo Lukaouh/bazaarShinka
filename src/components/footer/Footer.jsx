@@ -1,5 +1,7 @@
 import "./footer.css";
 import shinka from "../../assets/images/shinka.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 function footer() {
   return (
@@ -24,7 +26,16 @@ function footer() {
           </div>
           <div className="component">
             <span>საკონტაქტო ინფორმაცია</span>
-            <span>+995 551 77 88 99</span>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <FontAwesomeIcon icon={faPhone} className="phoneIcon" />
+              <span>+995 551 77 88 99</span>
+            </div>
           </div>
         </div>
       </div>

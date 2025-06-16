@@ -2,16 +2,25 @@ import "./basket.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import bin from "../../assets/images/bin.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Basket({ product, setShowBasket, getMenuList, showBasket }) {
+  const [productQuantity, setProductQuantity] = useState({});
+  const handleChange = (data, newValue) => {
+    setProductQuantity((prevValue) => ({
+      ...prevValue,
+      [data.product]: Math.max(newValue, Number(data.quantity)),
+    }));
+    console.log(typeof productQuantity[3]);
+  };
   useEffect(() => {
     if (showBasket) {
       getMenuList();
     }
   }, [showBasket]);
-  console.log(product);
+
   const removeProductFromBasket = async (element) => {
+    console.log(element);
     const sessionId = sessionStorage.getItem("session_id");
     const removedProduct = {
       product: element.product,
@@ -35,10 +44,15 @@ function Basket({ product, setShowBasket, getMenuList, showBasket }) {
 
     getMenuList();
   };
-  const totalPrice = product?.items?.reduce(
-    (acc, item) => acc + item.product_price,
-    0
-  );
+  const totalPrice = product?.items
+    ?.reduce((acc, item) => {
+      if (productQuantity[item.product] !== undefined) {
+        return acc + item.product_price * productQuantity[item.product];
+      } else {
+        return acc + item.total_price;
+      }
+    }, 0)
+    .toFixed(1);
 
   return (
     <div className={`basketContainer ${showBasket ? "basketShow" : ""}`}>
@@ -73,9 +87,36 @@ function Basket({ product, setShowBasket, getMenuList, showBasket }) {
                 <div className="basketMenuPrice">
                   <span>{data.product_price} ₾</span>
                   <div className="basketMemuBtn">
-                    <button>-</button>
-                    <span>1</span>
-                    <button>+</button>
+                    <button
+                      onClick={() => {
+                        const newValue =
+                          (productQuantity[data.product] ??
+                            Number(data.quantity)) - data.add_quantity;
+                        handleChange(data, Number(newValue.toFixed(1)));
+                      }}
+                    >
+                      -
+                    </button>
+
+                    <input
+                      type="number"
+                      value={(
+                        productQuantity[data.product] ?? Number(data.quantity)
+                      ).toFixed(1)}
+                      onChange={(e) =>
+                        handleChange(data, Number(e.target.value))
+                      }
+                    />
+                    <button
+                      onClick={() => {
+                        const newValue =
+                          (productQuantity[data.product] ??
+                            Number(data.quantity)) + data.add_quantity;
+                        handleChange(data, Number(newValue.toFixed(1)));
+                      }}
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
               </div>

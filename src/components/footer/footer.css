@@ -85,3 +85,8 @@
     width: 100%;
   }
 }
+
+.phoneIcon {
+  color: rgba(140, 167, 10, 1);
+  padding-right: 10px;
+}
