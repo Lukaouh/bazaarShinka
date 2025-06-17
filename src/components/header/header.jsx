@@ -3,8 +3,9 @@ import companyLogo from "../../assets/images/companyLogo.png";
 import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faBars } from "@fortawesome/free-solid-svg-icons";
-
-function header({ setShowBasket, setMobHeader, basketLength }) {
+import { useBasket } from "../../context/basketLengthContext";
+function header({ setShowBasket, setMobHeader }) {
+  const { basketLength, setBasketLength } = useBasket();
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
   const showBasketContent = () => {
@@ -48,7 +49,7 @@ function header({ setShowBasket, setMobHeader, basketLength }) {
               />
             </button>
             <div className="arrayLength">
-              <span>{basketLength ?? 0}</span>
+              <span>{basketLength ? basketLength : 0}</span>
             </div>
           </div>
         </div>

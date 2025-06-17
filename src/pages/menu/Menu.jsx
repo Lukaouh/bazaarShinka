@@ -7,13 +7,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import ResponsiveHeader from "../../components/responsiveHeader/responsiveHeader";
 import Footer from "../../components/footer/footer";
-function Menu({ setBasketLength, basketLength }) {
+import { useBasket } from "../../context/basketLengthContext";
+function Menu({}) {
   const [categories, setCategories] = useState([]);
   const [activeList, setActiveList] = useState(null);
   const [showBasket, setShowBasket] = useState(false);
   const [showCategory, setShowCategory] = useState(true);
   const [mobHeader, setMobHeader] = useState(false);
   const [product, setProduct] = useState([]);
+  const { basketLength, setBasketLength } = useBasket();
+
   useEffect(() => {
     const response = axios
       .get("https://misho.pythonanywhere.com/api/store/category")
@@ -54,7 +57,6 @@ function Menu({ setBasketLength, basketLength }) {
       sessionStorage.setItem("cart_data", JSON.stringify(data));
       setProduct(data);
       setBasketLength(data?.items?.length);
-      console.log(data?.items?.length);
     } catch (error) {}
   };
   const addToBasket = async (element) => {
@@ -87,16 +89,13 @@ function Menu({ setBasketLength, basketLength }) {
     } catch (error) {}
     getMenuList();
   };
-  useEffect(() => {
-    console.log("App.jsx -> basketLength changed in menu:", basketLength);
-  }, [basketLength]);
+
   return (
     <>
       <Header
         setShowBasket={setShowBasket}
         setMobHeader={setMobHeader}
         mobHeader={mobHeader}
-        basketLength={basketLength}
       />
       <ResponsiveHeader mobHeader={mobHeader} setMobHeader={setMobHeader} />
       <div className="menuContainer">
