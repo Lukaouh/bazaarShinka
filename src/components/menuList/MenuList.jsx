@@ -4,13 +4,7 @@ import "./menuList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import Basket from "../basket/Basket";
-function MenuList({
-  showBasket,
-  setShowBasket,
-  addToBasket,
-  getMenuList,
-  product,
-}) {
+function MenuList({ showBasket, setShowBasket, addToBasket, getMenuList }) {
   const [menu, setMenu] = useState([]);
 
   useEffect(() => {
@@ -28,7 +22,6 @@ function MenuList({
         setShowBasket={setShowBasket}
         showBasket={showBasket}
         getMenuList={getMenuList}
-        product={product}
       />
 
       <div className="menuListContainer">

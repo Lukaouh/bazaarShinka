@@ -5,12 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faBars } from "@fortawesome/free-solid-svg-icons";
 import { useBasket } from "../../context/basketLengthContext";
 function header({ setShowBasket, setMobHeader }) {
-  const { basketLength, setBasketLength } = useBasket();
+  const { productList, setProductList } = useBasket();
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
   const showBasketContent = () => {
     setShowBasket(true);
   };
+
   const showMobileHeader = () => {
     setMobHeader(true);
   };
@@ -49,7 +50,9 @@ function header({ setShowBasket, setMobHeader }) {
               />
             </button>
             <div className="arrayLength">
-              <span>{basketLength ? basketLength : 0}</span>
+              <span>
+                {productList?.items?.length ? productList?.items?.length : 0}
+              </span>
             </div>
           </div>
         </div>

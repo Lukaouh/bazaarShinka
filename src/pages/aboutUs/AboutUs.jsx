@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Header from "../../components/header/Header";
+import Header from "../../components/header/header";
 import axios from "axios";
 import "./AboutUs.css";
 import ResponsiveHeader from "../../components/responsiveHeader/responsiveHeader";
@@ -20,7 +20,7 @@ function AboutUs() {
 
   return (
     <>
-      <Header mobHeader={mobHeader} setMobHeader={setMobHeader} />
+      <Header setMobHeader={setMobHeader} />
       <ResponsiveHeader mobHeader={mobHeader} setMobHeader={setMobHeader} />
       <div className="aboutUsContainer">
         {" "}

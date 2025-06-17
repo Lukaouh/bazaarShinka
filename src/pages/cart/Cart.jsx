@@ -1,0 +1,142 @@
+import "./cart.css";
+import Header from "../../components/header/header";
+import ResponsiveHeader from "../../components/responsiveHeader/responsiveHeader";
+import { useState } from "react";
+import { useBasket } from "../../context/basketLengthContext";
+import bin from "../../assets/images/bin.png";
+function Cart() {
+  const [mobHeader, setMobHeader] = useState(false);
+  const { productList, setProductList } = useBasket();
+  const [productQuantity, setProductQuantity] = useState({});
+  const handleChange = (data, newValue) => {
+    setProductQuantity((prevValue) => ({
+      ...prevValue,
+      [data.product]: Math.max(newValue, Number(data.second_quantity)),
+    }));
+  };
+  const getMenuList = async () => {
+    const sessionId = sessionStorage.getItem("session_id");
+    try {
+      const response = await fetch(
+        "https://misho.pythonanywhere.com/api/order/cart/",
+        {
+          method: "GET",
+          headers: {
+            ...(sessionId ? { "Session-ID": sessionId } : {}),
+          },
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        console.error("Failed to fetch menu list");
+        return;
+      }
+
+      const data = await response.json();
+      sessionStorage.setItem("cart_data", JSON.stringify(data));
+
+      setProductList(data);
+    } catch (error) {}
+  };
+  const removeProductFromBasket = async (element) => {
+    const sessionId = sessionStorage.getItem("session_id");
+    const removedProduct = {
+      product: element.product,
+    };
+    try {
+      const response = await fetch(
+        "https://misho.pythonanywhere.com/api/order/remove-product/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(sessionId ? { "Session-ID": sessionId } : {}),
+          },
+          credentials: "include",
+          body: JSON.stringify(removedProduct),
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    getMenuList();
+  };
+  return (
+    <>
+      <Header setMobHeader={setMobHeader} />
+      <ResponsiveHeader setMobHeader={setMobHeader} mobHeader={mobHeader} />
+      <div className="cartContainer">
+        <div className="productContainer">
+          <span>კალათაში {productList?.items?.length} პროდუქტია</span>
+          <div className="choosenProduct">
+            {productList?.items?.map((data) => (
+              <div className="mapeProductContainer" key={data.product}>
+                <div className="productImgAndName">
+                  <img
+                    src={`https://misho.pythonanywhere.com${data.product_image}`}
+                    alt="product_img"
+                  />
+                  <span>{data.product_name}</span>
+                </div>
+                <div className="priceBtn">
+                  <div className="basketCartBtn">
+                    <button
+                      onClick={() => {
+                        const newValue =
+                          (productQuantity[data.product] ??
+                            Number(data.quantity)) - data.add_quantity;
+                        handleChange(data, Number(newValue.toFixed(1)));
+                      }}
+                    >
+                      -
+                    </button>
+
+                    <input
+                      type="number"
+                      value={
+                        productQuantity[data.product] ?? Number(data.quantity)
+                      }
+                      onChange={(e) =>
+                        handleChange(data, Number(e.target.value))
+                      }
+                    />
+                    <button
+                      onClick={() => {
+                        const newValue =
+                          (productQuantity[data.product] ??
+                            Number(data.quantity)) + data.add_quantity;
+                        handleChange(data, Number(newValue.toFixed(1)));
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div className="priceSpan">
+                    <span>
+                      {" "}
+                      {(
+                        data.product_price *
+                        (productQuantity[data.product] ?? Number(data.quantity))
+                      ).toFixed(1)}
+                      ₾
+                    </span>
+                  </div>
+                  <div className="binIcon">
+                    <button onClick={() => removeProductFromBasket(data)}>
+                      <img src={bin} alt="bin" className="recycleBin" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="payContainer"></div>
+      </div>
+    </>
+  );
+}
+
+export default Cart;

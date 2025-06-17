@@ -14,8 +14,7 @@ function Menu({}) {
   const [showBasket, setShowBasket] = useState(false);
   const [showCategory, setShowCategory] = useState(true);
   const [mobHeader, setMobHeader] = useState(false);
-  const [product, setProduct] = useState([]);
-  const { basketLength, setBasketLength } = useBasket();
+  const { productList, setProductList } = useBasket();
 
   useEffect(() => {
     const response = axios
@@ -55,8 +54,8 @@ function Menu({}) {
 
       const data = await response.json();
       sessionStorage.setItem("cart_data", JSON.stringify(data));
-      setProduct(data);
-      setBasketLength(data?.items?.length);
+
+      setProductList(data);
     } catch (error) {}
   };
   const addToBasket = async (element) => {
@@ -92,11 +91,7 @@ function Menu({}) {
 
   return (
     <>
-      <Header
-        setShowBasket={setShowBasket}
-        setMobHeader={setMobHeader}
-        mobHeader={mobHeader}
-      />
+      <Header setShowBasket={setShowBasket} setMobHeader={setMobHeader} />
       <ResponsiveHeader mobHeader={mobHeader} setMobHeader={setMobHeader} />
       <div className="menuContainer">
         <div className="content">
@@ -150,7 +145,6 @@ function Menu({}) {
             setShowBasket={setShowBasket}
             addToBasket={addToBasket}
             getMenuList={getMenuList}
-            product={product}
           />
         </div>
       </div>

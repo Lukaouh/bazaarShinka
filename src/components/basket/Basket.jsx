@@ -3,9 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import bin from "../../assets/images/bin.png";
 import { useEffect, useState } from "react";
-
-function Basket({ setShowBasket, showBasket, product, getMenuList }) {
+import { useNavigate } from "react-router-dom";
+import { useBasket } from "../../context/basketLengthContext";
+function Basket({ setShowBasket, showBasket, getMenuList }) {
+  const { productList, setProductList } = useBasket();
   const [productQuantity, setProductQuantity] = useState({});
+  const navigate = useNavigate();
   const handleChange = (data, newValue) => {
     setProductQuantity((prevValue) => ({
       ...prevValue,
@@ -42,7 +45,7 @@ function Basket({ setShowBasket, showBasket, product, getMenuList }) {
 
     getMenuList();
   };
-  const totalPrice = product?.items
+  const totalPrice = productList?.items
     ?.reduce((acc, item) => {
       if (productQuantity[item.product] !== undefined) {
         return acc + item.product_price * productQuantity[item.product];
@@ -54,7 +57,7 @@ function Basket({ setShowBasket, showBasket, product, getMenuList }) {
 
   const goToCart = async () => {
     const sessionId = sessionStorage.getItem("session_id");
-    const updateOrderData = product?.items.map((item) => {
+    const updateOrderData = productList?.items.map((item) => {
       return {
         product: item.product,
         quantity: productQuantity[item.product] ?? item.quantity,
@@ -86,6 +89,7 @@ function Basket({ setShowBasket, showBasket, product, getMenuList }) {
     }
 
     getMenuList();
+    navigate("/cart");
   };
 
   return (
@@ -102,7 +106,7 @@ function Basket({ setShowBasket, showBasket, product, getMenuList }) {
           </button>
         </div>
         <div className="productList">
-          {product?.items?.map((data) => (
+          {productList?.items?.map((data) => (
             <div className="mapedContainer" key={data.product}>
               <div className="basketMenuImg">
                 {" "}
@@ -157,7 +161,7 @@ function Basket({ setShowBasket, showBasket, product, getMenuList }) {
             </div>
           ))}
         </div>
-        {product?.items?.length > 0 ? (
+        {productList?.items?.length > 0 ? (
           <div className="lastPriceAndOrder">
             <span>სულ : {totalPrice}₾</span>
             <button

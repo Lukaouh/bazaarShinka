@@ -5,15 +5,17 @@ const BasketContext = createContext();
 export const useBasket = () => useContext(BasketContext);
 
 export const BasketProvider = ({ children }) => {
-  const [basketLength, setBasketLength] = useState(() => {
-    const saved = sessionStorage.getItem("basket_length");
-    return saved ? Number(saved) : 0;
+  const [productList, setProductList] = useState(() => {
+    const saved = sessionStorage.getItem("basket_data");
+    return saved ? JSON.parse(saved) : {};
   });
   useEffect(() => {
-    sessionStorage.setItem("basket_length", basketLength);
-  }, [basketLength]);
+    if (productList) {
+      sessionStorage.setItem("basket_data", JSON.stringify(productList));
+    }
+  }, [productList]);
   return (
-    <BasketContext.Provider value={{ basketLength, setBasketLength }}>
+    <BasketContext.Provider value={{ productList, setProductList }}>
       {children}
     </BasketContext.Provider>
   );
