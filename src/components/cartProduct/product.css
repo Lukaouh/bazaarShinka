@@ -1,20 +1,20 @@
-/* .cartContainer {
+.cartContainer {
   display: flex;
   width: 100%;
-  align-items: center;
   padding-top: 50px;
+  gap: 24px;
 }
 
 .productContainer {
   display: flex;
-  padding: 0 24px;
-  width: 100%;
+
+  width: 65%;
   flex-direction: column;
 }
 .productContainer span {
   padding: 0 0 15px 0;
   color: rgba(51, 51, 51, 1);
-  font-family: "FiraGO-500";
+  font-family: "FiraGO-400";
   font-size: 16px;
 }
 .choosenProduct {
@@ -24,8 +24,8 @@
   border-radius: 16px;
   box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.05);
   justify-content: space-between;
-  width: 70%;
 }
+
 .mapeProductContainer {
   display: flex;
   justify-content: space-between;
@@ -41,6 +41,7 @@
   height: 100px;
   border-radius: 4px;
 }
+
 .priceBtn {
   display: flex;
   justify-content: space-between;
@@ -75,26 +76,44 @@
   outline: none;
   background: transparent;
   cursor: pointer;
-} */
+}
 
-/* .cartContent {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.payContainer {
+  width: 35%;
   display: flex;
-  width: 100%;
+  padding: 35px 0;
+  max-height: 250px;
 }
-.rightContent {
-  width: 70%;
-}
-.leftContent {
-  width: 30%;
-  padding-top: 60px;
+
+@media only screen and (min-width: 768px) {
+  .contactForMobResolution {
+    display: none;
+  }
 }
 .cartContainer {
   display: flex;
   width: 100%;
-} */
-
+  padding-top: 50px;
+}
 @media only screen and (max-width: 768px) {
-  .contactForDesktopResolution {
-    display: none;
+  .cartContainer {
+    flex-direction: column;
+  }
+  .productContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .payContainer {
+    width: 100%;
+  }
+  .payContainer {
+    padding: 0;
   }
 }

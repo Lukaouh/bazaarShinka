@@ -13,9 +13,7 @@ function AboutUs() {
       .then((response) => {
         setVideo(response.data);
       })
-      .catch((error) => {
-        console.log("error gvak dzmebo");
-      });
+      .catch((error) => {});
   }, []);
 
   return (

@@ -1,0 +1,53 @@
+.orderDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px 24px;
+  gap: 20px;
+  border-radius: 16px;
+  box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.05);
+}
+
+.orderInfo,
+.orderInfoPrice {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.orderDetailsHead span {
+  color: rgba(140, 167, 10, 1);
+  font-family: "FiraGO-500";
+  font-size: 16px;
+}
+.orderInfo {
+  color: rgba(51, 51, 51, 1);
+  font-size: 15px;
+  font-family: "FiraGO-400";
+}
+.orderInfoPrice {
+  color: rgba(51, 51, 51, 1);
+  font-size: 18px;
+  font-family: "FiraGO-600";
+}
+.orderButton {
+  display: flex;
+  width: 100%;
+}
+.orderButton button {
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  background: rgba(238, 182, 39, 1);
+  color: white;
+
+  font-size: 16px;
+  font-family: "FiraGO-500";
+}
+.orderButton button:active {
+  color: rgba(238, 182, 39, 1);
+  background: white;
+}
