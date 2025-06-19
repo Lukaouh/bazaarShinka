@@ -3,10 +3,10 @@
 
   flex-direction: column;
   border-radius: 16px;
-  width: 95%;
+  width: 100%;
 }
 .formContainer {
-  width: 100%;
+  width: 65%;
   display: flex;
   flex-direction: column;
   padding: 15px 15px;
@@ -16,7 +16,7 @@
 }
 .contactFormContent {
   padding: 30px 24px;
-  width: 63%;
+  width: 100%;
 }
 .formContainer span {
   color: rgba(51, 51, 51, 1);
@@ -40,7 +40,8 @@
 
 .name input,
 .phone input,
-.address input {
+.address input,
+.address select {
   width: 95%;
 
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -53,5 +54,11 @@
   .contactFormContent {
     padding: 0;
     width: 100%;
+  }
+  .formContainer {
+    width: 95%;
+  }
+  .contactFormContainer {
+    width: 95%;
   }
 }

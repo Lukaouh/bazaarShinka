@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useBasket } from "../../context/basketLengthContext";
 import Product from "../../components/cartProduct/Product";
 import ContactForm from "../../components/contactInfo/ContactForm";
+import { Link } from "react-router-dom";
 function Cart() {
   const [mobHeader, setMobHeader] = useState(false);
   const { productList, setProductList } = useBasket();
@@ -13,14 +14,20 @@ function Cart() {
     <>
       <Header setMobHeader={setMobHeader} />
       <ResponsiveHeader setMobHeader={setMobHeader} mobHeader={mobHeader} />
-      <div style={{ padding: "0 24px" }}>
-        {" "}
-        <Product />
-      </div>
-      <div className="contactForDesktopResolution">
-        {" "}
-        <ContactForm />
-      </div>
+      {productList.items?.length > 0 ? (
+        <div className="cartContainedddr">
+          {" "}
+          <Product />
+        </div>
+      ) : (
+        <div className="cartIsEmpty">
+          {" "}
+          <p> თქვენი კალათა ცარიელი </p>
+          <Link to="/menu" className="goForProduct">
+            მენიუ
+          </Link>
+        </div>
+      )}
     </>
   );
 }

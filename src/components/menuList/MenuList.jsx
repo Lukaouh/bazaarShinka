@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import "./menuList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import PopUp from "../popUp/popUp";
 import Basket from "../basket/Basket";
-function MenuList({ showBasket, setShowBasket, addToBasket, getMenuList }) {
-  const [menu, setMenu] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("https://misho.pythonanywhere.com/api/store/products")
-      .then((response) => {
-        setMenu(response.data);
-      })
-      .catch((error) => {});
-  }, []);
-
+import { useState } from "react";
+function MenuList({
+  showBasket,
+  setShowBasket,
+  addToBasket,
+  getMenuList,
+  menu,
+}) {
+  const [ingredientsPopUp, setIngredientsPopUp] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState();
+  const selectedItem = (element) => {
+    setIngredientsPopUp(true);
+    setSelectedProduct(element);
+  };
   return (
     <div>
       <Basket
@@ -44,10 +45,22 @@ function MenuList({ showBasket, setShowBasket, addToBasket, getMenuList }) {
                   />
                   დამატება
                 </button>
-                <button className="detailedInfo">დეტალურად</button>
+                <button
+                  className="detailedInfo"
+                  onClick={() => selectedItem(data)}
+                >
+                  დეტალურად
+                </button>
               </div>
             </div>
           ))}
+          {/* PopUp Component */}
+          {ingredientsPopUp && (
+            <PopUp
+              selectedProduct={selectedProduct}
+              setIngredientsPopUp={setIngredientsPopUp}
+            />
+          )}
         </div>
       </div>
     </div>

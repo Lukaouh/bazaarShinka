@@ -1,3 +1,7 @@
+.cartContainedddr {
+  padding: 0 24px;
+}
+
 /* .cartContainer {
   display: flex;
   width: 100%;
@@ -92,9 +96,39 @@
   display: flex;
   width: 100%;
 } */
+.cartIsEmpty {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  flex-direction: column;
+  gap: 10px;
+}
+.cartIsEmpty p {
+  color: rgba(140, 167, 10, 1);
+  font-size: 18px;
+  font-weight: 400;
+  font-family: "FiraGO-400";
+}
+.goForProduct {
+  background-color: rgba(140, 167, 10, 1);
+  font-size: 18px;
+  font-weight: 400;
+  font-family: "FiraGO-400";
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
 
+  text-decoration: none;
+
+  cursor: pointer;
+}
 @media only screen and (max-width: 768px) {
   .contactForDesktopResolution {
     display: none;
+  }
+  .cartContainedddr {
+    padding: 0 10px;
   }
 }

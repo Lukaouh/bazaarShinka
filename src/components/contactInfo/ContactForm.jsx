@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-function ContactInfo() {
+function ContactInfo({ setDeliverPrice, deliverPrice }) {
+  const [selectedOption, setSelectedOption] = useState();
   const schema = yup.object({
     first_name: yup.string().required("Field is empty"),
     phone: yup.string().required("Field is empty"),
@@ -14,44 +15,38 @@ function ContactInfo() {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+  const streets = [
+    {
+      name: "ადგილიდან წაღება",
+      price: 0,
+    },
+    {
+      name: "დიღომი",
+      price: 10,
+    },
+    {
+      name: "ვაკე",
+      price: 7,
+    },
+    {
+      name: "საბურთალო",
+      price: 5,
+    },
+    {
+      name: "წყნეთი",
+      price: 12,
+    },
+  ];
 
-  return (
-    <div className="contactFormContainer">
-      <div className="contactFormContent">
-        <form className="formContainer">
-          <div className="contactHead">
-            <span>საკონტაქტო ინფორმაცია</span>
-          </div>
-          <span>მისამართი</span>
-          <div className="address">
-            <input type="text" name="address" {...register("address")}></input>
-            {errors.first_name && <p>{errors.first_name.message}</p>}
-          </div>
-          <div className="address">
-            <input type="text" name="address" {...register("address")}></input>
-          </div>
-          <span>პირადი ინფორმაცია</span>
-          <div className="personalInfoInputs">
-            {" "}
-            <div className="name">
-              <input
-                type="text"
-                name="address"
-                {...register("address")}
-              ></input>
-            </div>
-            <div className="phone">
-              <input
-                type="text"
-                name="address"
-                {...register("address")}
-              ></input>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+  const getDeliverPrice = (streetName) => {
+    setSelectedOption(streetName);
+    const selectedStreet = streets.find((street) => street.name === streetName);
+    if (selectedStreet) {
+      setDeliverPrice(selectedStreet.price);
+    }
+  };
+
+  return <></>;
 }
 
 export default ContactInfo;

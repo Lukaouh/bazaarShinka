@@ -1,8 +1,11 @@
 import "./orderDetails.css";
 import { useBasket } from "../../context/basketLengthContext";
 
-function OrderDetails({ totalPrice }) {
+function OrderDetails({ totalPrice, deliverPrice }) {
   const { productList, setProductList } = useBasket();
+
+  const total = Number(totalPrice) + Number(deliverPrice);
+  const sum = total.toFixed(1);
 
   return (
     <div className="orderDetailsContainer">
@@ -22,11 +25,11 @@ function OrderDetails({ totalPrice }) {
       </div>
       <div className="orderInfo">
         <span>მიტანის საფასური </span>
-        <span> </span>
+        <span> {deliverPrice} ₾</span>
       </div>
       <div className="orderInfoPrice">
         <span>ჯამი </span>
-        <span>{totalPrice} ₾</span>
+        <span> {sum} ₾</span>
       </div>
       <div className="orderButton">
         <button>შეკვეთის გაფორმება</button>

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../../components/header/header";
 import axios from "axios";
 import "./menu.css";
-import MenuList from "../../components/MenuList/MenuList";
+import MenuList from "../../components/menuList/MenuList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import ResponsiveHeader from "../../components/responsiveHeader/responsiveHeader";
@@ -15,17 +15,40 @@ function Menu({}) {
   const [showCategory, setShowCategory] = useState(true);
   const [mobHeader, setMobHeader] = useState(false);
   const { productList, setProductList } = useBasket();
+  const [filter, setFilter] = useState("");
+  const [menu, setMenu] = useState([]);
 
   useEffect(() => {
-    const response = axios
-      .get("https://misho.pythonanywhere.com/api/store/category")
-      .then((response) => {
+    const getDifferentCategoriesProduct = async () => {
+      try {
+        const response = await axios.get(
+          `https://misho.pythonanywhere.com/api/store/filter/products/?search=${filter}`
+        );
+        if (response.status >= 200 && response.status < 300) {
+          setMenu(response.data);
+        }
+      } catch (error) {
+        console.log("producti ar moidzebna", error);
+      }
+    };
+
+    getDifferentCategoriesProduct();
+  }, [filter]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "https://misho.pythonanywhere.com/api/store/category"
+        );
         setCategories(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      } catch (error) {
+        console.error("Failed to fetch categories", error);
+      }
+    };
+    fetchCategories();
   }, []);
+
   const showActiveList = (ID) => {
     if (ID === activeList) {
       setActiveList(null);
@@ -109,7 +132,6 @@ function Menu({}) {
                 />{" "}
               </button>
             </div>
-
             {categories.map((category) => (
               <div
                 className={`mainContent ${
@@ -127,12 +149,12 @@ function Menu({}) {
                     category.id === activeList ? "expanded" : "collapsed"
                   }`}
                 >
-                  <ul>
-                    {category.id === activeList &&
-                      category.children.map((data, index) => (
-                        <li key={index}>{data}</li>
-                      ))}
-                  </ul>
+                  {category.id === activeList &&
+                    category.children.map((data, index) => (
+                      <div key={index}>
+                        <button onClick={() => setFilter(data)}>{data}</button>
+                      </div>
+                    ))}
                 </div>
               </div>
             ))}
@@ -144,6 +166,7 @@ function Menu({}) {
             showBasket={showBasket}
             setShowBasket={setShowBasket}
             addToBasket={addToBasket}
+            menu={menu}
             getMenuList={getMenuList}
           />
         </div>

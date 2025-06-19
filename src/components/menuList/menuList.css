@@ -8,6 +8,7 @@
   display: grid;
   gap: 24px;
   grid-template-columns: repeat(3, 1fr);
+  padding: 0 24px 0 0;
 }
 
 .menuCard {
@@ -96,6 +97,11 @@
   .menuListContainer {
     justify-content: center;
   }
+  /* .menuContent {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
+  } */
 }
 
 @media (max-width: 568px) {

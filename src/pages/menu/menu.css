@@ -3,10 +3,11 @@
 
   width: 100%;
   padding-top: 50px;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .content {
   display: flex;
+  padding: 0 0 0 24px;
 }
 .mainContent {
   display: flex;
@@ -23,6 +24,8 @@
   height: fit-content;
 }
 .childrenContainer {
+  display: flex;
+  flex-direction: column;
   opacity: 0;
   transform: translateY(-10px);
   max-height: 0;
@@ -34,6 +37,12 @@
   opacity: 1;
   transform: translateY(0);
   max-height: 700px;
+}
+.childrenContainer button {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
 }
 
 .category {
@@ -77,10 +86,7 @@
   font-family: "FiraGO-400";
   font-weight: 400;
 }
-ul {
-  list-style: none;
-  text-align: start;
-}
+
 .contentHide {
   display: none;
 }

@@ -23,18 +23,19 @@
 
   border-radius: 16px;
   box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.05);
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .mapeProductContainer {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: 10px 20px;
 }
 .productImgAndName {
   display: flex;
   align-items: center;
   gap: 20px;
+  width: 60%;
 }
 .productImgAndName img {
   width: 100px;
@@ -42,65 +43,39 @@
   border-radius: 4px;
 }
 
-.priceBtn {
+.importedPriceBtn {
   display: flex;
-  justify-content: space-between;
-  width: 50%;
   align-items: center;
-}
-.basketCartBtn {
-  display: flex;
-}
 
-.basketCartBtn input {
-  display: flex;
-  text-align: center;
-  border: none;
-  width: 60px;
-  outline: none;
-  max-width: 70px;
-  font-family: "FiraGO-500";
-  font-size: 16px;
+  width: 50%;
 }
-.basketCartBtn button {
-  background: rgba(11, 89, 47, 0.05);
-  outline: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 4px;
-}
-
-.binIcon button {
-  border: none;
-  outline: none;
-  background: transparent;
-  cursor: pointer;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 .payContainer {
   width: 35%;
   display: flex;
   padding: 35px 0;
   max-height: 250px;
 }
-
-@media only screen and (min-width: 768px) {
-  .contactForMobResolution {
-    display: none;
-  }
+.importedPriceBtnResponsive {
+  display: flex;
+  flex-direction: column;
 }
 .cartContainer {
   display: flex;
   width: 100%;
   padding-top: 50px;
 }
+@media only screen and (min-width: 768px) {
+  .contactForMobResolution {
+    display: none;
+  }
+  .productImgAndName {
+    min-width: 200px;
+  }
+  .importedPriceBtnResponsive {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .cartContainer {
     flex-direction: column;
@@ -115,5 +90,42 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   .payContainer {
     padding: 0;
+  }
+  .mapeProductContainer {
+    display: flex;
+    /* 
+    flex-direction: column; */
+    padding: 10px 20px;
+  }
+  /* .priceBtn {
+    display: flex;
+    padding-left: 130px;
+    width: 50%;
+  } */
+  /* .importedPriceBtn {
+    display: none;
+  } */
+}
+@media only screen and (max-width: 492px) {
+  .importedPriceBtn {
+    display: none;
+  }
+  .productImgAndName span {
+    display: none;
+  }
+  .productImgAndName {
+    width: 30%;
+  }
+  .importedPriceBtnResponsive {
+    width: 60%;
+    gap: 10px;
+  }
+  .mapeProductContainer {
+    gap: 10px;
+  }
+}
+@media only screen and (min-width: 492px) {
+  .importedPriceBtnResponsive {
+    display: none;
   }
 }
