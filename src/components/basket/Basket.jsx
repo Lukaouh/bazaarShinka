@@ -58,6 +58,7 @@ function Basket({ setShowBasket, showBasket, getMenuList }) {
   const goToCart = async () => {
     const sessionId = sessionStorage.getItem("session_id");
     const updateOrderData = productList?.items.map((item) => {
+      console.log(productQuantity[item.product]);
       return {
         product: item.product,
         quantity: productQuantity[item.product] ?? item.quantity,

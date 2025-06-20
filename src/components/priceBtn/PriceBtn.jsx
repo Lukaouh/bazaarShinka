@@ -2,8 +2,16 @@ import React from "react";
 import "./priceBtn.css";
 import bin from "../../assets/images/bin.png";
 import { useBasket } from "../../context/basketLengthContext";
-function PriceBtn({ productQuantity, handleChange, data }) {
+import { useState } from "react";
+function PriceBtn({ data, setProductQuantity, productQuantity }) {
   const { productList, setProductList } = useBasket();
+
+  const handleChange = (data, newValue) => {
+    setProductQuantity((prevValue) => ({
+      ...prevValue,
+      [data.product]: Math.max(newValue, Number(data.second_quantity)),
+    }));
+  };
   const getMenuList = async () => {
     const sessionId = sessionStorage.getItem("session_id");
     try {
@@ -53,6 +61,7 @@ function PriceBtn({ productQuantity, handleChange, data }) {
 
     getMenuList();
   };
+
   return (
     <div style={{ width: "100%", display: "flex" }}>
       {" "}

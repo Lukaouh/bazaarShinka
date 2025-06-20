@@ -2,12 +2,10 @@ import React from "react";
 import "./product.css";
 import { useBasket } from "../../context/basketLengthContext";
 import { useState } from "react";
-import OrderDetails from "../orderDetails/OrderDetails";
-import ContactForm from "../contactInfo/ContactForm";
+
 import PriceBtn from "../priceBtn/PriceBtn";
-function Product() {
+function Product({ productQuantity, setProductQuantity }) {
   const { productList, setProductList } = useBasket();
-  const [productQuantity, setProductQuantity] = useState({});
   const [deliverPrice, setDeliverPrice] = useState(0);
 
   const handleChange = (data, newValue) => {
@@ -51,6 +49,7 @@ function Product() {
                         productQuantity={productQuantity}
                         handleChange={handleChange}
                         data={data}
+                        setProductQuantity={setProductQuantity}
                       />
                     </div>
                   </div>
@@ -60,6 +59,7 @@ function Product() {
                       productQuantity={productQuantity}
                       handleChange={handleChange}
                       data={data}
+                      setProductQuantity={setProductQuantity}
                     />
                   </div>
                 </div>
@@ -73,16 +73,6 @@ function Product() {
               </div>
             ))}
           </div>
-        </div>
-        <div className="contactForMobResolution">
-          {" "}
-          <ContactForm
-            setDeliverPrice={setDeliverPrice}
-            deliverPrice={deliverPrice}
-          />
-        </div>
-        <div className="payContainer">
-          <OrderDetails totalPrice={totalPrice} deliverPrice={deliverPrice} />
         </div>
       </div>
     </>
