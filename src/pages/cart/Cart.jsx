@@ -8,14 +8,18 @@ import ContactForm from "../../components/contactInfo/ContactForm";
 // import OrderDetails from "../../components/OrderDetails";
 import OrderDetails from "../../components/orderDetails/OrderDetails";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
 function Cart() {
   const [mobHeader, setMobHeader] = useState(false);
   const [productQuantity, setProductQuantity] = useState({});
   const { productList, setProductList } = useBasket();
   const [deliverData, setDeliverData] = useState([]);
-  const [deliverPrice, setDeliverPrice] = useState(0);
-  const [selectedZoneId, setSelectedZoneId] = useState();
-
+  const [deliverPrice, setDeliverPrice] = useState({
+    price: 0,
+    id: 0,
+  });
+  const formRef = useRef(null);
+  console.log(deliverPrice);
   const totalPrice = productList?.items
     ?.reduce((acc, item) => {
       if (productQuantity[item.product] !== undefined) {
@@ -37,7 +41,7 @@ function Cart() {
         },
         credentials: "include",
         body: JSON.stringify({
-          delivery_zone_id: selectedZoneId,
+          delivery_zone_id: deliverPrice.id,
         }),
       }
     );
@@ -71,7 +75,7 @@ function Cart() {
               deliverData={deliverData}
               deliverPrice={deliverPrice}
               setDeliverPrice={setDeliverPrice}
-              setSelectedZoneId={setSelectedZoneId}
+              formRef={formRef}
             />
           </div>
           <div className="importedOrderList">
@@ -82,6 +86,7 @@ function Cart() {
               setProductQuantity={setProductQuantity}
               productQuantity={productQuantity}
               pay={pay}
+              formRef={formRef}
             />
           </div>
         </div>

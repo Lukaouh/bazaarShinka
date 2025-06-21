@@ -30,7 +30,7 @@ function responsiveHeader({ mobHeader, setMobHeader }) {
               setMobHeader(false);
             }}
           >
-            <FontAwesomeIcon icon={faX} />
+            <FontAwesomeIcon icon={faX} className="closeHeader" />
           </button>
         </div>
       </div>

@@ -6,7 +6,7 @@ import MenuList from "../../components/menuList/MenuList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import ResponsiveHeader from "../../components/responsiveHeader/responsiveHeader";
-import Footer from "../../components/footer/footer";
+import Footer from "../../components/footer/Footer";
 import { useBasket } from "../../context/basketLengthContext";
 function Menu({}) {
   const [categories, setCategories] = useState([]);

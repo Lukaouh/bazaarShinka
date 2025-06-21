@@ -4,18 +4,20 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 function ContactInfo({
   setDeliverData,
   deliverData,
   setDeliverPrice,
-  deliverPrice,
-  setSelectedZoneId,
+  formRef,
 }) {
   const [selectedOption, setSelectedOption] = useState();
+
   const schema = yup.object({
-    first_name: yup.string().required("Field is empty"),
-    phone: yup.string().required("Field is empty"),
-    addres: yup.string().required("Field is empty"),
+    name: yup.string().required("სავალდებულო ველი"),
+    phone: yup.string().required("სავალდებულო ველი"),
+    address: yup.string().required("სავალდებულო ველი"),
+    zone: yup.string().required("უბნის არჩევა სავალდებულოა"),
   });
   const {
     register,
@@ -45,38 +47,72 @@ function ContactInfo({
       (street) => street.name === streetName
     );
     if (selectedStreet) {
-      setDeliverPrice(selectedStreet.price);
-      setSelectedZoneId(selectedStreet.id);
+      setDeliverPrice((prevValue) => ({
+        ...prevValue,
+        price: selectedStreet.price,
+        id: selectedStreet.id,
+      }));
     }
+  };
+  const handleSubmited = (data) => {
+    console.log("data aris", data);
   };
 
   return (
     <div className="contactFormContainer">
       <div className="contactContent">
-        <form className="contactForm">
+        <form
+          className="contactForm"
+          onSubmit={handleSubmit((data) => handleSubmited(data))}
+          ref={formRef}
+        >
           {" "}
           <div className="adrress">
             {" "}
             <select
+              {...register("zone")}
               value={selectedOption}
               onChange={(e) => getDeliverPrice(e.target.value)}
+              name="zone"
             >
+              <option value="">აირჩიეთ სასურველი უბანი</option>
               {deliverData.map((data, index) => (
                 <option key={index} value={data.name}>
                   {data.name}
                 </option>
               ))}
             </select>
+            {errors.zone && <p className="error">{errors.zone.message}</p>}
           </div>
           <div className="adrress">
-            <input></input>
+            <input
+              type="text"
+              placeholder="მაგ:ჭავჭავაძის გამზირი, სადარბაზო 1, სართული 2, ბინა 5*"
+              name="address"
+              {...register("address")}
+            ></input>
+            {errors.address && (
+              <p className="error">{errors.address.message}</p>
+            )}
           </div>
           <div className="personalInfo">
             <div className="name">
-              <input></input>
+              <input
+                type="text"
+                name="name"
+                placeholder="სახელი და გვარი"
+                {...register("name")}
+              ></input>
+              {errors.name && <p className="error">{errors.name.message}</p>}
             </div>
             <div className="phone">
-              <input></input>
+              <input
+                name="phone"
+                placeholder="მობილურის ნომერი"
+                type="text"
+                {...register("phone")}
+              ></input>
+              {errors.phone && <p className="error">{errors.phone.message}</p>}
             </div>
           </div>
         </form>

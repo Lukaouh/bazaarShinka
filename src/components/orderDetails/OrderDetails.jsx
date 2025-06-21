@@ -4,13 +4,13 @@ import { useBasket } from "../../context/basketLengthContext";
 function OrderDetails({
   totalPrice,
   deliverPrice,
-  setProductQuantity,
+  formRef,
   productQuantity,
   pay,
 }) {
   const { productList, setProductList } = useBasket();
 
-  const total = Number(totalPrice) + Number(deliverPrice);
+  const total = Number(totalPrice) + Number(deliverPrice.price);
   const sum = total.toFixed(1);
   const getMenuList = async () => {
     const sessionId = sessionStorage.getItem("session_id");
@@ -94,14 +94,20 @@ function OrderDetails({
         </div>
         <div className="orderInfo">
           <span>მიტანის საფასური </span>
-          <span> {deliverPrice} ₾</span>
+          <span> {deliverPrice.price} ₾</span>
         </div>
         <div className="orderInfoPrice">
           <span>ჯამი </span>
           <span> {sum} ₾</span>
         </div>
         <div className="orderButton">
-          <button onClick={() => pay()}>შეკვეთის გაფორმება</button>
+          <button
+            onClick={() => {
+              formRef.current.requestSubmit();
+            }}
+          >
+            შეკვეთის გაფორმება
+          </button>
         </div>
       </div>
     </div>

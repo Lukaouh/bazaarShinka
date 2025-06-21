@@ -11,10 +11,11 @@
 }
 
 .popup-content {
-  gap: 50px;
+  width: 100%;
+  gap: 30px;
   display: flex;
   background: white;
-  padding: 20px 50px 20px 20px;
+  padding: 20px 20px;
   border-radius: 8px;
   text-align: start;
   position: relative;
@@ -24,4 +25,44 @@
   overflow: hidden;
   overflow-y: scroll; */
   /* margin-top: %; */
+}
+.popUpImage {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.popUpHead {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+}
+.popUpHead h6 {
+  color: rgba(51, 51, 51, 1);
+  font-size: 16px;
+  font-family: "FiraGO-500";
+}
+
+.popUpImage img {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+}
+.closePopUp button {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+.closeHeader {
+  color: rgba(51, 51, 51, 0.8);
+}
+ol li {
+  color: rgba(51, 51, 51, 0.8);
+  font-size: 16px;
+  font-family: "FiraGO-400";
 }

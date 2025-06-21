@@ -47,13 +47,13 @@
   outline: none;
   cursor: pointer;
   border: none;
-  background: rgba(238, 182, 39, 1);
+  background: rgba(11, 89, 47, 1);
   color: white;
 
   font-size: 16px;
   font-family: "FiraGO-500";
 }
 .orderButton button:active {
-  color: rgba(238, 182, 39, 1);
+  color: rgba(11, 89, 47, 1);
   background: white;
 }
