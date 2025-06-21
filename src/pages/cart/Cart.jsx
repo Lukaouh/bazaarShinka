@@ -19,7 +19,7 @@ function Cart() {
     id: 0,
   });
   const formRef = useRef(null);
-  console.log(deliverPrice);
+
   const totalPrice = productList?.items
     ?.reduce((acc, item) => {
       if (productQuantity[item.product] !== undefined) {

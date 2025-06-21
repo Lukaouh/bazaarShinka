@@ -104,6 +104,7 @@ function OrderDetails({
           <button
             onClick={() => {
               formRef.current.requestSubmit();
+              goToCart();
             }}
           >
             შეკვეთის გაფორმება
